@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 18px;
+    background-color: #FAFAFA;
+}
+
+li {
+    list-style: none;
+}
+
+.header {
+    display: block;
+    height: 70px;
+    background-color: #1597EE;
+    color: #fff;
+}
+
+.header__container {
+    display: block;
+    height: 70px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.header__logo {
+    display: block;
+    height: 40px;
+    width: 200px;
+}
+
+.window-tasks {
+    max-width: 1200px;
+    background-color: #fff;
+    margin: 10px auto;
+    padding: 20px 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: -1px 0px 12px -2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 0px 12px -2px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px 0px 12px -2px rgba(0, 0, 0, 0.75);
+}
+
+.window-tasks__title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 18px;
+}
+
+.window-tasks__item {
+    display: flex;
+    margin-top: 20px;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+}
+
+.window-tasks__item--check {
+    display: block;
+}
+
+.window-tasks__item--task {
+    display: block;
+    margin-left: 10px;
+    width: 1120px;
+}
+
+.window-tasks__item--delete {
+    display: block;
+    width: 10px;
+    height: 3px;
+    background-color: #F88631;
+    margin: auto 0;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.window-tasks__item--delete::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 3px;
+    background-color: #F88631;
+    transform: rotate(90deg);
+}
+
+.window-tasks__empty {
+    display: block;
+    width: 500px;
+    height: 50px;
+    margin: 20px auto;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+}
+
+.add-task {
+    max-width: 1200px;
+    background-color: #fff;
+    margin: 10px auto;
+    padding: 20px 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: -1px 0px 12px -2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 0px 12px -2px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px 0px 12px -2px rgba(0, 0, 0, 0.75);
+}
+
+.add-task__title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 18px;
+}
+
+.add-task__submit {
+    margin-top: 20px;
+}
+
+.add-task__submit--input {
+    display: block;
+    width: 1150px;
+    height: 20px;
+    padding: 0 50px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 1px solid #000;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+}
+
+.add-task__submit--bottom {
+    display: flex;
+    justify-content: space-between;
+    width: 1150px;
+    margin-top: 20px;
+}
+
+.add-task__submit--select {
+    display: block;
+    margin-left: 20px;
+    width: 150px;
+    height: 25px;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+}
+
+.add-task__submit--button {
+    display: block;
+    margin-right: 20px;
+    border: none;
+    background-color: inherit;
+    color: #1597EE;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 18px;
+    outline: none;
+    cursor: pointer;
+}
