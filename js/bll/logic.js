@@ -93,7 +93,9 @@
     outputTasks();
 
     buttonAddTask.addEventListener('click', function() {
-        toDoList.pop();
+        if (toDoList[0].empty === true) {
+            toDoList.pop();
+        }
         if (inputAddTask.value === '') {
             let selectValue = document.querySelector('.add-task__submit--select').value;
             toDoList.push({ chekbox: false, content: selectValue, delete: false });
