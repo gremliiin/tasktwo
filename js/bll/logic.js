@@ -1,29 +1,33 @@
 (function() {
 
+    //находим элементы, с которыми будем взаимодействовать
     let windowTasks = document.querySelector('.window-tasks__items');
     let buttonAddTask = document.querySelector('.add-task__submit--button');
     let inputAddTask = document.querySelector('.add-task__submit--input');
 
 
-
+    //создаем функцию, которая возвращает тег задачи
     let createTasks = (task) => {
+
         let element;
+
         if (task.empty !== true) {
+            //если массив состояния не пустой, делаем обертку данных в эллемент
             element = `<li class="window-tasks__item">
         <input class="window-tasks__item--check" type="checkbox" ${task.chekbox ? 'checked' : ''}>
         <p class="window-tasks__item--task" ${task.chekbox === true ? 'style = "text-decoration: line-through"' : ''}>${task.content}</p>
         <span class="window-tasks__item--delete"></span>
     </li>`
         } else {
+            //если массив состояния пустой, добавляем элемент, который сообщит пользователю что задач нету
             element = '<li class="window-tasks__empty">Добавьте задачу</li>';
         }
-
-
 
         return element;
 
     }
 
+    //создаем функцию, которая проверяет нужно ли удалить задачу и принимает решение
     let checkDeleteElements = () => {
 
         toDoList.forEach(function(el) {
@@ -36,6 +40,10 @@
         });
     }
 
+    /*
+        создаем функцию которая привязывает observer к кнопкам удаления и по
+        клику на кнопку дает статус удаления true
+    */
     let deleteTask = () => {
         let deleteButtonsNode = document.querySelectorAll('.window-tasks__item--delete');
         let deleteButtons = [];
@@ -51,32 +59,51 @@
         });
     }
 
+    //создаем функцию, которая отрисовывает задачи по состоянию
     let outputTasks = () => {
 
-
-
+        //проверяем состояния элемента по удалению
         checkDeleteElements();
-        let elements = [];
+
+        //создаем переменную с элементами
+        let elements = '';
+
+        //создаем функцию, которая записывает элементы в переменную с элементами
         let pushTasks = () => {
+
             toDoList.forEach(function(el) {
-                elements.push(createTasks(el));
+                elements += createTasks(el);
             });
+
         }
+
+        //записываем элементы в переменную с элементами
         pushTasks();
 
+        /*
+            проверяем состояния массива с данными, если он пустой, добавляем туда
+            объект который на это указывает
+        */
         if (toDoList.length === 0) {
             toDoList.push({ empty: true });
             pushTasks();
         }
 
-        windowTasks.innerHTML = elements.join('');
+        //отрисовываем элементы c задачами на странице
+        windowTasks.innerHTML = elements;
 
+        //находим checkbox задач и записываем в nodeList
         let checkElNode = document.querySelectorAll('.window-tasks__item--check');
+
+        //создаем массив, в котором будут хранится эллменты с nodeList
         let checkEl = [];
+
+        //записываем nodeList в массив
         for (let key of checkElNode) {
             checkEl.push(key);
         }
 
+        //каждому checkbox присваеваем observer, который проверяет на атрибут checked
         checkEl.forEach(function(el) {
             el.addEventListener('click', function() {
                 if (toDoList[checkEl.indexOf(el)].chekbox === true) {
@@ -88,40 +115,49 @@
             });
         });
 
+        //удаляем задачи, у которых есть статус удаления
         deleteTask();
     }
+
+    //отрисоваваем задачи по состоянию
     outputTasks();
 
-    buttonAddTask.addEventListener('click', function() {
-        if (toDoList[0].empty === true) {
-            toDoList.pop();
-        }
-        if (inputAddTask.value === '') {
-            let selectValue = document.querySelector('.add-task__submit--select').value;
-            toDoList.push({ chekbox: false, content: selectValue, delete: false });
-            outputTasks();
-        } else {
-            toDoList.push({ chekbox: false, content: inputAddTask.value, delete: false });
-            inputAddTask.value = '';
-            outputTasks();
-        }
-    });
-
-    let selectTasks = () => {
-        let optionsNode = document.querySelectorAll('.add-task__select--item');
-        let options = [];
-        for (let key of optionsNode) {
-            options.push(key);
-        }
-
-        options.forEach(function(el) {
-            el.addEventListener('click', function(el) {
-                inputAddTask.value = el.value;
-                console.log(inputAddTask.value);
+    //создаем функцию которая присваевает observer кнопки добавления добавляет данные задачи в массив состояния
+    let addTasks = () => {
+        buttonAddTask.addEventListener('click', function() {
+            if (toDoList[0].empty === true) {
+                toDoList.pop();
+            }
+            if (inputAddTask.value === '') {
+                let selectValue = document.querySelector('.add-task__submit--select').value;
+                toDoList.push({ chekbox: false, content: selectValue, delete: false });
                 outputTasks();
-            });
-        })
+            } else {
+                toDoList.push({ chekbox: false, content: inputAddTask.value, delete: false });
+                inputAddTask.value = '';
+                outputTasks();
+            }
+        });
+
     }
 
+    //добавляем кнопке "Добавить" логику добавления задач
+    addTasks();
+
+    /*
+        создаем функцию, которая присваивает observer к select, который в свою очередь 
+        добавляет в строку ввода задач выбранную пользователем задачу 
+    */
+    let selectTasks = () => {
+        let task = document.querySelector('.add-task__submit--select');
+
+        task.addEventListener('change', function() {
+            console.log(task.value);
+            inputAddTask.value = task.value;
+            outputTasks();
+        });
+    }
+
+    //присваиваем observer к select
     selectTasks();
 })();
