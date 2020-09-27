@@ -35,6 +35,7 @@
                 let index = toDoList.indexOf(el);
                 if (index > -1) {
                     toDoList.splice(index, 1);
+                    saveLocal(toDoList);
                 }
             }
         });
@@ -54,6 +55,7 @@
         deleteButtons.forEach(function(el) {
             el.addEventListener('click', function() {
                 toDoList[deleteButtons.indexOf(el)].delete = true;
+                saveLocal(toDoList);
                 outputTasks();
             })
         });
@@ -86,7 +88,12 @@
         */
         if (toDoList.length === 0) {
             toDoList.push({ empty: true });
+            saveLocal(toDoList);
             pushTasks();
+        }
+
+        let addClassForLastTaskElement = () => {
+            console.log(elements.split(' '));
         }
 
         //отрисовываем элементы c задачами на странице
@@ -108,8 +115,10 @@
             el.addEventListener('click', function() {
                 if (toDoList[checkEl.indexOf(el)].chekbox === true) {
                     toDoList[checkEl.indexOf(el)].chekbox = false;
+                    saveLocal(toDoList);
                 } else {
                     toDoList[checkEl.indexOf(el)].chekbox = true;
+                    saveLocal(toDoList);
                 }
                 outputTasks();
             });
@@ -124,21 +133,36 @@
 
     //создаем функцию которая присваевает observer кнопки добавления добавляет данные задачи в массив состояния
     let addTasks = () => {
-        buttonAddTask.addEventListener('click', function() {
+        //логика добавления задачи
+        let logicAddTask = () => {
             if (toDoList[0].empty === true) {
                 toDoList.pop();
+                saveLocal(toDoList);
             }
             if (inputAddTask.value === '') {
                 let selectValue = document.querySelector('.add-task__submit--select').value;
                 toDoList.push({ chekbox: false, content: selectValue, delete: false });
+                saveLocal(toDoList);
                 outputTasks();
             } else {
                 toDoList.push({ chekbox: false, content: inputAddTask.value, delete: false });
+                saveLocal(toDoList);
                 inputAddTask.value = '';
                 outputTasks();
             }
+        };
+
+        //добавление задачи по кнопке "Добавить"
+        buttonAddTask.addEventListener('click', function() {
+            logicAddTask();
         });
 
+        //добавление задачи по кнопке клавише "Enter"
+        inputAddTask.addEventListener('keydown', function(event) {
+            if (event.code == 'Enter') {
+                logicAddTask();
+            }
+        });
     }
 
     //добавляем кнопке "Добавить" логику добавления задач
@@ -152,7 +176,6 @@
         let task = document.querySelector('.add-task__submit--select');
 
         task.addEventListener('change', function() {
-            console.log(task.value);
             inputAddTask.value = task.value;
             outputTasks();
         });
@@ -160,4 +183,5 @@
 
     //присваиваем observer к select
     selectTasks();
+
 })();
