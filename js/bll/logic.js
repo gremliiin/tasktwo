@@ -175,7 +175,7 @@
     let selectTasks = () => {
         let task = document.querySelector('.add-task__submit--select');
 
-        task.addEventListener('change', function() {
+        task.addEventListener('click', function() {
             inputAddTask.value += task.value + ' ';
             outputTasks();
         });
