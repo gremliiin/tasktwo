@@ -4,6 +4,7 @@
     let windowTasks = document.querySelector('.window-tasks__items');
     let buttonAddTask = document.querySelector('.add-task__submit--button');
     let inputAddTask = document.querySelector('.add-task__submit--input');
+    let addTaskError = document.querySelector('.add-task__error');
     let multipleTasks = [];
 
 
@@ -143,19 +144,21 @@
                 saveLocal(toDoList);
             }
             if (inputAddTask.value === '' && multipleTasks.length == 0) {
-                let addTaskError = document.querySelector('.add-task__error');
                 addTaskError.innerHTML = 'Ошибка: Выберите задачу или напишите ее';
                 outputTasks();
             } else if (inputAddTask.value !== '') {
                 toDoList.push({ chekbox: false, content: inputAddTask.value, delete: false });
                 saveLocal(toDoList);
                 inputAddTask.value = '';
+                addTaskError.innerHTML = '';
                 outputTasks();
             }
 
             if (multipleTasks.length !== 0) {
                 multipleTasks.forEach(function(el) {
                     toDoList.push({ chekbox: false, content: el, delete: false });
+                    inputAddTask.value = '';
+                    addTaskError.innerHTML = '';
                     outputTasks();
                     saveLocal(toDoList);
                 });
