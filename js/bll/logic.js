@@ -4,6 +4,9 @@
     let windowTasks = document.querySelector('.window-tasks__items');
     let buttonAddTask = document.querySelector('.add-task__submit--button');
     let inputAddTask = document.querySelector('.add-task__submit--input');
+    let multipleTasks = [];
+
+
 
 
     //создаем функцию, которая возвращает тег задачи
@@ -139,17 +142,25 @@
                 toDoList.pop();
                 saveLocal(toDoList);
             }
-            if (inputAddTask.value === '') {
-                let selectValue = document.querySelector('.add-task__submit--select').value;
-                toDoList.push({ chekbox: false, content: selectValue, delete: false });
-                saveLocal(toDoList);
+            if (inputAddTask.value === '' && multipleTasks.length == 0) {
+                let addTaskError = document.querySelector('.add-task__error');
+                addTaskError.innerHTML = 'Ошибка: Выберите задачу или напишите ее';
                 outputTasks();
-            } else {
+            } else if (inputAddTask.value !== '') {
                 toDoList.push({ chekbox: false, content: inputAddTask.value, delete: false });
                 saveLocal(toDoList);
                 inputAddTask.value = '';
                 outputTasks();
             }
+
+            if (multipleTasks.length !== 0) {
+                multipleTasks.forEach(function(el) {
+                    toDoList.push({ chekbox: false, content: el, delete: false });
+                    outputTasks();
+                    saveLocal(toDoList);
+                });
+            }
+            multipleTasks = [];
         };
 
         //добавление задачи по кнопке "Добавить"
@@ -170,14 +181,20 @@
 
     /*
         создаем функцию, которая присваивает observer к select, который в свою очередь 
-        добавляет в строку ввода задач выбранную пользователем задачу 
+        добавляет в массив задачи, которые нужно вывести пр нажатии на кнопку "Добавить" 
     */
     let selectTasks = () => {
-        let task = document.querySelector('.add-task__submit--select');
+        let tasksSelectNode = document.querySelector('.add-task__submit--select');
+        let tasksSelect = [];
 
-        task.addEventListener('click', function() {
-            inputAddTask.value += task.value + ' ';
-            outputTasks();
+        for (let key of tasksSelectNode) {
+            tasksSelect.push(key);
+        }
+
+        tasksSelect.forEach(op => {
+            op.addEventListener('click', function() {
+                multipleTasks.push(op.value);
+            })
         });
     }
 
