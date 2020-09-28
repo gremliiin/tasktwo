@@ -139,6 +139,7 @@
     let addTasks = () => {
         //логика добавления задачи
         let logicAddTask = () => {
+            selectTasks();
             if (toDoList[0].empty === true) {
                 toDoList.pop();
                 saveLocal(toDoList);
@@ -187,18 +188,13 @@
         добавляет в массив задачи, которые нужно вывести пр нажатии на кнопку "Добавить" 
     */
     let selectTasks = () => {
-        let tasksSelectNode = document.querySelector('.add-task__submit--select');
-        let tasksSelect = [];
+        let tasksSelectNode = document.querySelectorAll('.add-task__select--item');
 
         for (let key of tasksSelectNode) {
-            tasksSelect.push(key);
+            if (key.selected) {
+                multipleTasks.push(key.value);
+            }
         }
-
-        tasksSelect.forEach(op => {
-            op.addEventListener('click', function() {
-                multipleTasks.push(op.value);
-            })
-        });
     }
 
     //присваиваем observer к select
