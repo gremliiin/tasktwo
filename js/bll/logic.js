@@ -176,7 +176,7 @@
         let task = document.querySelector('.add-task__submit--select');
 
         task.addEventListener('change', function() {
-            inputAddTask.value = task.value;
+            inputAddTask.value += task.value + ' ';
             outputTasks();
         });
     }
